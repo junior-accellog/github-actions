@@ -22,7 +22,7 @@ jobs:
         uses: github/branch-deploy@v8.0.0
         id: branch-deploy
         with:
-          trigger: ".deploy"
+          trigger: ".noop"
 
       # Run your deployment logic for your project here - examples seen below
 
@@ -43,13 +43,14 @@ jobs:
         if: ${{ steps.branch-deploy.outputs.continue == 'true' && steps.branch-deploy.outputs.noop != 'true' }}
         run: echo "I am doing a fake regular deploy"  
 
-      # - name: Sync files
-      #   uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-      #   with:
-      #     server: ${{ secrets.ftp_host }}
-      #     port: ${{ secrets.ftp_port }}
-      #     username: ${{ secrets.ftp_user }}
-      #     password: ${{ secrets.ftp_password }}
-      #     sftp_only: true
-      #     local_path: './*'
-      #     remote_path: '/datadrive/data/html/github-actions'             
+      - name: Sync files
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          trigger: ".deploy"
+          server: ${{ secrets.ftp_host }}
+          port: ${{ secrets.ftp_port }}
+          username: ${{ secrets.ftp_user }}
+          password: ${{ secrets.ftp_password }}
+          sftp_only: true
+          local_path: './*'
+          remote_path: '/datadrive/data/html/github-actions'             
