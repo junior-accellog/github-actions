@@ -12,8 +12,8 @@ permissions:
   checks: read
 
 jobs:
-  demo:
-    if: ${{ github.event.issue.pull_request }}
+  deploy:
+    if: ${{ github.event.issue.pull_request }}    
     runs-on: ubuntu-latest
     steps:     
       - name: branch-deploy
@@ -21,6 +21,10 @@ jobs:
         id: branch-deploy
         with:
           trigger: ".deploy"
+          noop_trigger: ".noop"
+          reaction: "rocket"
+          environment: develop
+          stable_branch: "main"
      
       - uses: actions/checkout@v3
         with:
