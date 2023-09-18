@@ -1,19 +1,25 @@
-on: [push]
+on:
+  push:
+    branches:
+      - develop
+      - main
 
+name: Deploy Carga Pontual
 jobs:
-    deploy_job:
+  web-deploy:
+    name: Deploy
     runs-on: ubuntu-latest
-    name: deploy
     steps:
-        - name: Checkout
+      - name: Get latest code
         uses: actions/checkout@v2
-        - name: Deploy file
+
+      - name: Sync files
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
-            username: ${{ secrets.FTP_USER }}
-            server: ${{ secrets.FTP_HOST }}
-            port: ${{ secrets.FTP_PORT }}
-            local_path: './*'
-            remote_path: '/datadrive/data/html/github-actions'
-            sftp_only: true
-            password: ${{ secrets.FTP_PASSWORD }}
+          server: ${{ secrets.ftp_host }}
+          port: ${{ secrets.ftp_port }}
+          username: ${{ secrets.ftp_user }}
+          password: ${{ secrets.ftp_password }}
+          sftp_only: true
+          local_path: './*'
+          remote_path: '/datadrive/data/html/github-actions'          
