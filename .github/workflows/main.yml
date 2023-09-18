@@ -51,7 +51,6 @@ jobs:
           sftp_only: true
           local_path: './*'
           remote_path: '/datadrive/data/html/github-actions'
-          ref: ${{ steps.branch-deploy.outputs.ref }}
 
   result:
     needs: [trigger, deploy]
