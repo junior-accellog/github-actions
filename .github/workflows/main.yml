@@ -9,7 +9,7 @@ permissions:
   deployments: write
   contents: write
   checks: read
-
+  
 jobs:
   trigger:
     if: ${{ github.event.issue.pull_request }}
@@ -25,7 +25,7 @@ jobs:
       actor_handle: ${{ steps.branch-deploy.outputs.actor_handle }}
 
     steps:
-      - uses: github/branch-deploy@vX.X.X
+      - uses: github/branch-deploy@v8.0.0
         id: branch-deploy
         with:
           skip_completing: 'true' # we will complete the deployment manually
@@ -52,6 +52,7 @@ jobs:
           sftp_only: true
           local_path: './*'
           remote_path: '/datadrive/data/html/github-actions'
+          ref: ${{ steps.branch-deploy.outputs.ref }}
 
   result:
     needs: [trigger, deploy]
