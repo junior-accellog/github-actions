@@ -1,5 +1,6 @@
 <?php
 
-echo 'teste 001';
+echo 'teste 002';
+
 phpinfo();
 exit;
