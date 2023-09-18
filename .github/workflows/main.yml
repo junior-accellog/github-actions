@@ -1,25 +1,19 @@
-on: 
-  push:
-    branches:
-      - develop
-      - main
-name: 🚀 Deploy website on push
-jobs:
-  deploy_job:
-  runs-on: ubuntu-latest
-  name: Deploy
-  steps:
-  
-      - name: Get latest code
-        uses: actions/checkout@v3
+on: [push]
 
-      - name: Sync files
+jobs:
+    deploy_job:
+    runs-on: ubuntu-latest
+    name: deploy
+    steps:
+        - name: Checkout
+        uses: actions/checkout@v2
+        - name: Deploy file
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
             username: ${{ secrets.FTP_USER }}
             server: ${{ secrets.FTP_HOST }}
             port: ${{ secrets.FTP_PORT }}
-            password: ${{ secrets.FTP_PASSWORD }}        
-            local_path: './static/*'
-            remote_path: '/var/www/app'
+            local_path: './*'
+            remote_path: '/datadrive/data/html/github-actions'
             sftp_only: true
+            password: ${{ secrets.FTP_PASSWORD }}
