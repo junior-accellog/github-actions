@@ -42,7 +42,6 @@ jobs:
           ref: ${{ needs.trigger.outputs.ref }}
 
       - name: Sync files
-        if: ${{ steps.branch-deploy.outputs.continue == 'true' && steps.branch-deploy.outputs.noop != 'true' }}
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
           server: ${{ secrets.ftp_host }}
