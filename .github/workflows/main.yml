@@ -19,4 +19,4 @@ jobs:
         port: ${{ secrets.ftp_port }}
         username: ${{ secrets.ftp_user }}
         password: ${{ secrets.ftp_password }}
-        server-dir: /datadrive/data/html/junior/github-actions
+        server-dir: /datadrive/data/html/junior/github-actions/
