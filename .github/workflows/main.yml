@@ -18,8 +18,7 @@ jobs:
 
     steps:
       - name: branch-deploy
-      - uses: github/branch-deploy@v8.0.0
-        id: branch-deploy       
+      - uses: github/branch-deploy@v8.0.0            
 
       - name: checkout
         uses: actions/checkout@v3
