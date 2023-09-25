@@ -11,15 +11,31 @@ permissions:
   checks: read
   
 jobs:
+  trigger:
+    if: ${{ github.event.issue.pull_request }}
+    runs-on: ubuntu-latest
+    outputs:
+      continue: ${{ steps.branch-deploy.outputs.continue }}
+      noop: ${{ steps.branch-deploy.outputs.noop }}
+      deployment_id: ${{ steps.branch-deploy.outputs.deployment_id }}
+      environment: ${{ steps.branch-deploy.outputs.environment }}
+      ref: ${{ steps.branch-deploy.outputs.ref }}
+      comment_id: ${{ steps.branch-deploy.outputs.comment_id }}
+      initial_reaction_id: ${{ steps.branch-deploy.outputs.initial_reaction_id }}
+      actor_handle: ${{ steps.branch-deploy.outputs.actor_handle }}
+
+    steps:
+      - uses: github/branch-deploy@v8.0.0
+        id: branch-deploy
+        with:
+          skip_completing: 'true' # we will complete the deployment manually
+
   deploy:
     needs: trigger
     if: ${{ needs.trigger.outputs.continue == 'true' && needs.trigger.outputs.noop != 'true' }}
     runs-on: ubuntu-latest
 
     steps:
-      - name: branch-deploy
-      - uses: github/branch-deploy@v8.0.0            
-
       - name: checkout
         uses: actions/checkout@v3
         with:
